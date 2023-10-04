@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the standard installation profile.
+ */
+
+use Drupal\user\Entity\User;
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function integra_install() {
+
+  // Assign user 1 the "administrator" role.
+  $user = User::load(1);
+  $user->addRole('administrator');
+  $user->save();
+
+  //Creación de administrador web
+  $user = User::create([
+    'name' => 'admin',
+    'mail' => 'eformedia@efor.es',
+    'roles' => array('administrator'),
+    'pass' => rand(11111111, 99999999),
+    'status' => 1,
+  ]);
+  $user->save();
+
+  //Página de inicio
+  $node = Node::create([
+    'type' => 'page',
+    'title' => 'Inicio',
+    'langcode' => 'es',
+    'uid' => '1',
+    'status' => 1,
+    'body' => ['value' => 'Página de inicio', 'format' => 'full_html'],
+    'path' => ['alias' => '/inicio', 'pathauto' => Drupal\pathauto\PathautoState::SKIP],
+  ]);
+  $node->save();
+
+  //Aviso legal
+  $node = Node::create([
+    'type' => 'page',
+    'title' => 'Aviso legal',
+    'langcode' => 'es',
+    'uid' => '1',
+    'status' => 1,
+    'body' => ['value' => 'Aviso legal', 'format' => 'full_html'],
+    'path' => ['alias' => '/aviso-legal', 'pathauto' => Drupal\pathauto\PathautoState::SKIP],
+  ]);
+  $node->save();
+
+  //Política de privacidad
+  $node = Node::create([
+    'type' => 'page',
+    'title' => 'Política de privacidad',
+    'langcode' => 'es',
+    'uid' => '1',
+    'status' => 1,
+    'body' => ['value' => 'Política de privacidad', 'format' => 'full_html'],
+    'path' => ['alias' => '/politica-de-privacidad', 'pathauto' => Drupal\pathauto\PathautoState::SKIP],
+  ]);
+  $node->save();
+
+  //Política de cookies
+  $node = Node::create([
+    'type' => 'page',
+    'title' => 'Política de cookies',
+    'langcode' => 'es',
+    'uid' => '1',
+    'status' => 1,
+    'body' => ['value' => '<p><strong>¿Qué son las cookies?</strong></p><p>Cookie&nbsp;es un fichero que se descarga en su ordenador al acceder a determinadas páginas web. Las cookies permiten a una página web, entre otras cosas, almacenar y recuperar información sobre los hábitos de navegación de un usuario o de su equipo y, dependiendo de la información que contengan y de la forma en que utilice su equipo, pueden utilizarse para reconocer al usuario. El navegador del usuario memoriza cookies en el disco duro solamente durante la sesión actual ocupando un espacio de memoria mínimo y no perjudicando al ordenador. Las cookies no contienen ninguna clase de información personal específica, y la mayoría de las mismas se borran del disco duro al finalizar la sesión de navegador (las denominadas cookies de sesión).</p><p>La mayoría de los navegadores aceptan como estándar a las cookies y, con independencia de las mismas, permiten o impiden en los ajustes de seguridad las cookies temporales o memorizadas.</p><p>Sin su expreso consentimiento –mediante la activación de las cookies en su navegador– no enlazaremos en las cookies los datos memorizados con sus datos personales proporcionados en el momento del registro o la compra.</p><p>&nbsp;</p><p><strong>¿Qué cookies utiliza esta página web?</strong></p><p><strong>Cookies&nbsp;técnicas:</strong> Son aquéllas que permiten al usuario la navegación a través de una página web, plataforma o aplicación y la utilización de las diferentes opciones o servicios que en ella existan como, por ejemplo, controlar el tráfico y la comunicación de datos, identificar la sesión, acceder a partes de acceso restringido, recordar los elementos que integran un pedido, realizar el proceso de compra de un pedido, realizar la solicitud de inscripción o participación en un evento, utilizar elementos de seguridad durante la navegación, almacenar contenidos para la difusión de videos o sonido o compartir contenidos a través de redes sociales. El tratamiento de este tipo de cookies tiene como base jurídica el interés legítimo del responsable del tratamiento, y se conservarán durante un periodo máximo de 30 días.</p><p><strong>Cookies de análisis o medición:</strong> son aquellas que permiten al responsable de las mismas el seguimiento y análisis del comportamiento de los usuarios de los sitios web a los que están vinculadas, incluida la cuantificación de los impactos de los anuncios. La información recogida mediante este tipo de cookies se utiliza en la medición de la actividad de los sitios web, aplicación o plataforma, con el fin de introducir mejoras en función del análisis de los datos de uso que hacen los usuarios del servicio. El tratamiento de este tipo de cookies tiene como base jurídica el consentimiento del interesado y se conservarán durante un periodo máximo de 2 años.</p><p><strong>Cookies de terceros:</strong> Esta Web puede utilizar servicios de terceros que, por nuestra cuenta, recopilaran información con fines estadísticos, de uso del Site por parte del usuario y para la prestación de otros servicios relacionados con la actividad del Website y otros servicios de Internet.</p><p>&nbsp;</p><p><strong>¿Qué cookies de terceros utiliza esta página web?</strong></p><p>En particular, este sitio Web utiliza <strong>Google Analytics</strong>, un servicio analítico de web prestado por Google, Inc. con domicilio en los Estados Unidos con sede central en 1600 Amphitheatre Parkway, Mountain View, California 94043. Para la prestación de estos servicios, estos utilizan cookies que recopilan la información, incluida la dirección IP del usuario, que será transmitida, tratada y almacenada por Google en los términos fijados en la Web Google.com. Incluyendo la posible transmisión de dicha información a terceros por razones de exigencia legal o cuando dichos terceros procesen la información por cuenta de Google. Atendiendo a la finalidad, estas cookies están incluidas dentro del grupo de cookies de Análisis. En la siguiente tabla se pueden mostrar las cookies utilizadas.</p><div class="table-responsive"><table class="table table-striped"><thead><tr><th>Nombre</th><th>Tipo</th><th>Descripción</th><th>Finalidades</th><th>Plazo de conservación</th></tr></thead><tbody><tr><td><strong>Google Analytics</strong></td><td><strong>Análisis</strong></td><td>_ga</td><td>Esta cookie genera un ID de usuario único y registra la fecha, la primera y la última vez que el usuario vistió la web. Se utiliza para hacer recuento de cuantas veces visita el sitio un usuario único.</td><td>2 años</td></tr><tr><td><strong>Google Analytics</strong></td><td><strong>Análisis</strong></td><td>_gid</td><td>Esta cookie registra la hora de llegada a la página y caduca a las 24 horas. Sirve para calcular el tiempo que un usuario permanece en una página.</td><td>24 horas</td></tr><tr><td><strong>Google Analytics</strong></td><td><strong>Análisis</strong></td><td>_gat</td><td>Se usa para limitar el porcentaje de solicitudes</td><td>1 minuto</td></tr></tbody></table></div><p>&nbsp;</p><p><strong>Cesiones de datos personales</strong></p><p>Salvo obligación legal y exceptuando las citadas cookies de terceros, no se prevén cesiones de datos personales contenidos en las cookies, ni cualquier tipo de transferencias internacionales.</p><p>&nbsp;</p><p><strong>¿Cómo puede revocar su consentimiento, bloquear o eliminar cookies?</strong></p><p>Usted puede revocar su consentimiento en el momento que desee mediante el <a href="#" id="verAjustesCookies">siguiente enlace</a>.</p><p>Revocar el consentimiento hará que desde ese momento no se almacenen más las cookies revocadas, pero no ejecutará un borrado de las cookies que ya se hayan almacenado. Para ello, usted debe seguir las instrucciones relativas al navegador que utilice, clicando en enlace que corresponda dentro del siguiente párrafo:</p><p>Puede usted permitir, bloquear o eliminar las cookies instaladas en su equipo mediante la configuración de las opciones del navegador instalado en su ordenador:</p><ul><li><a href="http://support.google.com/chrome/bin/answer.py?hl=es&amp;answer=95647" target="_blank">Chrome</a></li><li><a href="http://windows.microsoft.com/es-es/windows7/how-to-manage-cookies-in-internet-explorer-9" target="_blank">Explorer</a></li><li><a href="http://support.mozilla.org/es/kb/habilitar-y-deshabilitar-cookies-que-los-sitios-we" target="_blank">Firefox</a></li><li><a href="http://support.apple.com/kb/ph5042" target="_blank">Safari</a></li></ul><p>Si necesita obtener más información sobre la directiva de cookies, por favor, consulte el Boletín Oficial del Estado publicado con fecha 31 de marzo de 2012 donde se trasponen las directivas en materia de comunicaciones electrónicas. También puede consultar la directiva en Information Commissioner Office (en inglés).</p>', 'format' => 'full_html'],
+    'path' => ['alias' => '/politica-de-cookies', 'pathauto' => Drupal\pathauto\PathautoState::SKIP],
+  ]);
+  $node->save();
+
+}
