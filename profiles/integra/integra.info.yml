@@ -21,7 +21,6 @@ install:
   - path
   - page_cache
   - dynamic_page_cache
-  - big_pipe
   - dblog
   - toolbar
   - field_ui
@@ -31,6 +30,10 @@ install:
   - automated_cron
   - backup_migrate
   - ctools
+  - gtm
+  - metatag
+  - metatag_open_graph
+  - metatag_views
   - pathauto
   - redirect
   - token
