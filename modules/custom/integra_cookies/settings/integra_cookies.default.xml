@@ -12,7 +12,7 @@
 		<aviso lenguaje="es">
 			<nivel_1>
 				<titulo>Acerca de las cookies en este sitio</titulo>
-				<texto><![CDATA[<p>Este sitio utiliza cookies propias y de terceros que permiten mejorar la usabilidad de navegación y recopilar información.</p>]]></texto>
+				<texto><![CDATA[<p>Este sitio, propiedad de [NOMBRE DEL EDITOR DEL SITIO WEB], utiliza cookies propias y de terceros que permiten mejorar la usabilidad de navegación y recopilar información.</p>]]></texto>
 				<instrucciones><![CDATA[<p>Haz click en "Aceptar cookies" para aceptar todas las cookies y acceder directamente al sitio o haz click en "Rechazar cookies" en el caso que desees aceptar únicamente las cookies esenciales para el funcionamiento básico del sitio web.</p><p>Para obtener más información consulta la página de <a href="politica-de-cookies">política de cookies</a>]]></instrucciones>
 				<boton_ok>Aceptar cookies</boton_ok>
 				<boton_nok>Rechazar cookies</boton_nok>
