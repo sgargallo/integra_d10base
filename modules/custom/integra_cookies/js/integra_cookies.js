@@ -86,6 +86,9 @@ function guardarConsentimiento(tiposCookiesConsentidos) {
   //Guardamos la cookie como que el usuario ha revisado el aviso y tomado una decisión
   jQuery.cookie("aviso_cookies_revisado", 1, {expires: caducidadConsentimiento, path:'/'});
 
+  //Enviamos evento de GTM para que pueda cambiar el escenario según la decisión del cliente
+  dataLayer.push({ 'event': 'cookies-aceptadas' });
+
   //Ocultamos la modal
   jQuery('#modalCookies').modal('hide');
 }
