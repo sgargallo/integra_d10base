@@ -2,7 +2,7 @@ global-styling:
   version: 1.x
   css:
     theme:
-      scss/style.css: {}
+      scss/style.scss: {}
 
 global-scripts:
   version: 1.x
