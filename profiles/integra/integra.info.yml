@@ -36,6 +36,7 @@ install:
   - metatag_views
   - pathauto
   - redirect
+  - scss_compiler
   - token
   - twig_tweak
   - integra_cookies
