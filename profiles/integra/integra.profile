@@ -29,14 +29,14 @@ function integra_form_install_configure_form_alter(&$form, FormStateInterface $f
 }
 
 function integra_form_install_settings_form_alter(&$form, FormStateInterface $form_state) {
-  
+
   //Ajuste del campo de contraseña para que acepte valores de entrada
-  $form['settings']['mysql']['password']['#type'] = 'textfield';
-  
+  $form['settings']['Drupal\\mysql\\Driver\\Database\\mysql']['password']['#type'] = 'textfield';
+
   //Precarga de datos del formulario
-  $form['settings']['mysql']['database']['#default_value'] = integra_obtener_nombre_sitio();
-  $form['settings']['mysql']['username']['#default_value'] = 'eformedia';
-  $form['settings']['mysql']['password']['#default_value'] = 'efor2017';
+  $form['settings']['Drupal\\mysql\\Driver\\Database\\mysql']['database']['#default_value'] = integra_obtener_nombre_sitio();
+  $form['settings']['Drupal\\mysql\\Driver\\Database\\mysql']['username']['#default_value'] = 'eformedia';
+  $form['settings']['Drupal\\mysql\\Driver\\Database\\mysql']['password']['#default_value'] = 'efor2017';
 }
 
 function integra_obtener_nombre_sitio() {
