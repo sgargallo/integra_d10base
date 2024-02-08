@@ -53,6 +53,7 @@ function integra_cookies_page_attachments(array &$attachments) {
 	$contenido_cookies .= "var caducidadConsentimiento = " . $xml_cookies->configuracion->caducidad_consentimiento . ";";
 	$contenido_cookies .= "var tiposCookiesActivos = '" . $xml_cookies->configuracion->tipos_cookies_activos . "';";
 	$contenido_cookies .= "var tiposCookiesObligatorios = '" . $xml_cookies->configuracion->tipos_cookies_obligatorios . "';";
+	$contenido_cookies .= "var tiposConsentimientoActivos = '" . $xml_cookies->configuracion->tipos_consentimientos_activos . "';";
 
 	//Inserción del contenido generado solo en el tema: personalizado
 	if (\Drupal::service('theme.manager')->getActiveTheme()->getName() == 'personalizado') {
@@ -65,8 +66,8 @@ function integra_cookies_page_attachments(array &$attachments) {
 		);
 	}
 
-	$attachments['#attached']['library'][] = 'integra_cookies/integra_cookies';
 	$attachments['#attached']['library'][] = 'integra_cookies/jquery.cookie';
+	$attachments['#attached']['library'][] = 'integra_cookies/integra_cookies';
 }
 
 //Generación de los avisos de diferentes niveles
@@ -115,8 +116,8 @@ function integra_cookies_generar_aviso_nivel_2() {
 			$contenido = str_replace("[titulo]", $aviso->nivel_2->titulo, $contenido);
 			$contenido = str_replace("[instrucciones_1]", $aviso->nivel_2->instrucciones_1, $contenido);
 			$contenido = str_replace("[instrucciones_2]", $aviso->nivel_2->instrucciones_2, $contenido);
-            $contenido = str_replace("[etiqueta_tipo]", $aviso->nivel_2->etiqueta_tipo, $contenido);
-            $contenido = str_replace("[etiqueta_descripcion]", $aviso->nivel_2->etiqueta_descripcion, $contenido);
+			$contenido = str_replace("[etiqueta_tipo]", $aviso->nivel_2->etiqueta_tipo, $contenido);
+			$contenido = str_replace("[etiqueta_descripcion]", $aviso->nivel_2->etiqueta_descripcion, $contenido);
 			$contenido = str_replace("[boton_ok]", $aviso->nivel_2->boton_ok, $contenido);
 
 			$collapse_cookies = "";
@@ -132,12 +133,12 @@ function integra_cookies_generar_aviso_nivel_2() {
 					$contenido_collapse_tipo_cookie = file_get_contents($base_path_templates . '/integra_cookies_collapse_cookies.html');
 
 					//Definición del estado del toggle: por defecto es una cookie opcional y está desactivada
-                    $toggle_cookie = '<input class="form-check-input" type="checkbox" id="cookies_[id]">';
+					$toggle_cookie = '<input class="form-check-input" type="checkbox" id="cookies_[id]" tipos_consentimiento="[tipos_consentimiento]">';
 
 					if (in_array($tipo_cookie["id"], $tipos_cookies_obligatorios)) {
 
 						//Cookie obligatoria. No damos opción de no activarla...
-                        $toggle_cookie = '<input class="form-check-input" type="checkbox" id="cookies_[id]" checked disabled>';
+						$toggle_cookie = '<input class="form-check-input" type="checkbox" id="cookies_[id]" tipos_consentimiento="[tipos_consentimiento]" checked disabled>';
 
 					} else {
 
@@ -147,7 +148,7 @@ function integra_cookies_generar_aviso_nivel_2() {
 						//Revisamos el estado de la cookie en el sistema y solo en caso que exista lo marcamos como activada...
 						if (isset($_COOKIE[$nombre_cookie])) {
 							if ($_COOKIE[$nombre_cookie] == "1") {
-                                $toggle_cookie = '<input class="form-check-input" type="checkbox" id="cookies_[id]" checked>';
+								$toggle_cookie = '<input class="form-check-input" type="checkbox" id="cookies_[id]" tipos_consentimiento="[tipos_consentimiento]" checked>';
 							}
 						}
 					}
@@ -159,6 +160,7 @@ function integra_cookies_generar_aviso_nivel_2() {
 					$contenido_collapse_tipo_cookie = str_replace("[id]", $tipo_cookie["id"], $contenido_collapse_tipo_cookie);
 					$contenido_collapse_tipo_cookie = str_replace("[nombre]", $tipo_cookie->nombre, $contenido_collapse_tipo_cookie);
 					$contenido_collapse_tipo_cookie = str_replace("[texto]", $tipo_cookie->texto, $contenido_collapse_tipo_cookie);
+					$contenido_collapse_tipo_cookie = str_replace("[tipos_consentimiento]", $tipo_cookie["tipos_consentimiento"], $contenido_collapse_tipo_cookie);
 
 					//Agregamos al collapse de cookies el tipo de cookie tratado
 					$collapse_cookies .= $contenido_collapse_tipo_cookie;
