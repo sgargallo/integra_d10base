@@ -37,7 +37,7 @@
 						<nombre>Análisis</nombre>
 						<texto><![CDATA[<p>Las cookies de análisis nos permiten estudiar la navegación de los usuarios de nuestra página web en general (por ejemplo, qué secciones de la página son las más visitadas, qué servicios se usan más y si funcionan correctamente, etc.).</p><p>A partir de la información estadística sobre la navegación en nuestra página web, podemos mejorar tanto el propio funcionamiento de la página como los distintos servicios que ofrece. Por tanto, estas cookies no tienen una finalidad publicitaria, sino que únicamente sirven para que nuestra página web funcione mejor, adaptándose a nuestros usuarios en general. Activándolas contribuirás a dicha mejora continua.</p><p>Puedes activar o desactivar estas cookies marcando la casilla correspondiente, estando desactivadas por defecto.</p>]]></texto>
 					</tipo_cookie>
-					<tipo_cookie id="publicidad" tipos_consentimiento="ad_storage,ad_personalization">
+					<tipo_cookie id="publicidad" tipos_consentimiento="ad_storage,ad_user_data,ad_personalization">
 						<nombre>Publicidad</nombre>
 						<texto><![CDATA[<p>Las cookies de publicidad comportamental nos permiten obtener información basada en la observación de tus hábitos y comportamientos de navegación en la web, a fin de poder mostrarte contenidos publicitarios que se ajusten mejor a tus gustos e intereses personales.</p><p>Por tanto, activando este tipo de cookies, la publicidad que te mostremos en nuestra página web no será genérica, sino que estará orientada a tus búsquedas, gustos e intereses, ajustándose por tanto exclusivamente a ti.</p><p>Puedes activar o desactivar estas cookies marcando la casilla correspondiente, estando desactivadas por defecto.</p>]]></texto>
 					</tipo_cookie>
