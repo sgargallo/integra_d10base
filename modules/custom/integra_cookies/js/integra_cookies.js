@@ -70,84 +70,84 @@ function guardarConsentimiento(tiposCookiesConsentidos) {
 
 	//Obtenemos los tipos de cookies habilitados
 	var tiposCookies = tiposCookiesActivos.split(",");
-
+	
 	//Repasamos todos los tipos de cookies habilitados
 	tiposCookies.forEach(function(valor, indice, array) {
-
+	
 		//Vemos si el tipo actual está entre los consentidos por el usuario
 		if (tiposCookiesConsentidos.includes(valor)) {
-
+		
 			//Tipo de cookie consentida por el usuario
 			jQuery.cookie("acepta_cookies_" + valor, 1, {expires: caducidadConsentimiento, path:'/'});
 		} else {
-
+		
 			//Tipo de cookie NO consentida por el usuario
 			jQuery.cookie("acepta_cookies_" + valor, 0, {expires: caducidadConsentimiento, path:'/'});
 		}
 	});
-
-  //Guardamos la cookie como que el usuario ha revisado el aviso y tomado una decisión
-  jQuery.cookie("aviso_cookies_revisado", 1, {expires: caducidadConsentimiento, path:'/'});
-
-  //Enviamos evento de GTM para que pueda cambiar el escenario según la decisión del cliente
-  if (typeof dataLayer !== 'undefined') {
-	  dataLayer.push({ 'event': 'cookies-aceptadas' });
-  }
-
-  //Ocultamos la modal
-  jQuery('#modalCookies').modal('hide');
-
-  //Sincronizamos valores con GTM
-  sincronizarConsentimiento();
+	
+	//Guardamos la cookie como que el usuario ha revisado el aviso y tomado una decisión
+	jQuery.cookie("aviso_cookies_revisado", 1, {expires: caducidadConsentimiento, path:'/'});
+	
+	//Enviamos evento de GTM para que pueda cambiar el escenario según la decisión del cliente
+	if (typeof dataLayer !== 'undefined') {
+		dataLayer.push({ 'event': 'cookies-aceptadas' });
+	}
+	
+	//Ocultamos la modal
+	jQuery('#modalCookies').modal('hide');
+	
+	//Sincronizamos valores con GTM
+	sincronizarConsentimiento();
 }
 
 function sincronizarConsentimiento() {
 
-  //Solo ejecutamos la sincronización de consentimientos si se ha inicializado la variable de tipos de consentimiento activos
-  if (typeof tiposConsentimientoActivos !== 'undefined') {
-  
-  	//Creamos un array con los tipos de consentimiento y su estado por defecto
-	var consentimientos = {};
-  
-	//Obtenemos los tipos de consentimiento habilitados
-	var tiposConsentimiento = tiposConsentimientoActivos.split(",");
-  
-	//Repasamos todos los tipos de consentimiento habilitados y establecemos su valor más restrictivo por defecto
-	tiposConsentimiento.forEach(function(valor, indice, array) { consentimientos[valor] = "denied"; });
-  
-	//Obtenemos los tipos de cookies habilitados
-	var tiposCookies = tiposCookiesActivos.split(",");
-  
-	//Repasamos todos los tipos de cookies habilitados
-	tiposCookies.forEach(function(valor, indice, array) {
-  
-	  //Comprobamos si el tipo de cookie actual está entre las habilitadas por el usuario
-	  if (jQuery.cookie("acepta_cookies_" + valor) == 1) {
-  
-		//Extraemos los consentimientos asociados a la misma
-		tiposConsentimientoHabilitar = (jQuery("#cookies_" + valor).attr('tipos_consentimiento')).split(",");
-  
-		//Repasamos todos los tipos de consentimieto que aplican en esta cookie
-		tiposConsentimientoHabilitar.forEach(function(valor, indice, array) {
-		  if (valor != "") {
-			consentimientos[valor] = "granted";
-		  }
+	//Solo ejecutamos la sincronización de consentimientos si se ha inicializado la variable de tipos de consentimiento activos
+	if (typeof tiposConsentimientoActivos !== 'undefined') {
+	
+		//Creamos un array con los tipos de consentimiento y su estado por defecto
+		var consentimientos = {};
+		
+		//Obtenemos los tipos de consentimiento habilitados
+		var tiposConsentimiento = tiposConsentimientoActivos.split(",");
+		
+		//Repasamos todos los tipos de consentimiento habilitados y establecemos su valor más restrictivo por defecto
+		tiposConsentimiento.forEach(function(valor, indice, array) { consentimientos[valor] = "denied"; });
+		
+		//Obtenemos los tipos de cookies habilitados
+		var tiposCookies = tiposCookiesActivos.split(",");
+		
+		//Repasamos todos los tipos de cookies habilitados
+		tiposCookies.forEach(function(valor, indice, array) {
+		
+			//Comprobamos si el tipo de cookie actual está entre las habilitadas por el usuario
+			if (jQuery.cookie("acepta_cookies_" + valor) == 1) {
+			
+				//Extraemos los consentimientos asociados a la misma
+				tiposConsentimientoHabilitar = (jQuery("#cookies_" + valor).attr('tipos_consentimiento')).split(",");
+				
+				//Repasamos todos los tipos de consentimieto que aplican en esta cookie
+				tiposConsentimientoHabilitar.forEach(function(valor, indice, array) {
+					if (valor != "") {
+						consentimientos[valor] = "granted";
+					}
+				});
+			}
 		});
-	  }
-	});
-  
-	//console.log(consentimientos);
-  
-	//Revisamos si ya ha aceptado el aviso de cookies o no para generar el default o un update
-	if (jQuery.cookie("aviso_cookies_revisado") != 1) {
-  
-	  //Primer acceso a la web sin operar previamente con el aviso
-	  if (typeof gtag !== 'undefined') { gtag('consent', 'default', consentimientos); }
-  
-	} else {
-  
-	  //Recarga de la página con aviso ya consultado o visita posterior con preferencias cargadas en las cookies
-	  if (typeof gtag !== 'undefined') { gtag('consent', 'update', consentimientos); }
+		
+		//console.log(consentimientos);
+		
+		//Revisamos si ya ha aceptado el aviso de cookies o no para generar el default o un update
+		if (jQuery.cookie("aviso_cookies_revisado") != 1) {
+		
+			//Primer acceso a la web sin operar previamente con el aviso
+			if (typeof gtag !== 'undefined') { gtag('consent', 'default', consentimientos); }
+			
+		} else {
+		
+			//Recarga de la página con aviso ya consultado o visita posterior con preferencias cargadas en las cookies
+			if (typeof gtag !== 'undefined') { gtag('consent', 'update', consentimientos); }
+		}
 	}
-  }
 }
