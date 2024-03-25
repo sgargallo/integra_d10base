@@ -54,6 +54,7 @@ function integra_cookies_page_attachments(array &$attachments) {
 	$contenido_cookies .= "var tiposCookiesActivos = '" . $xml_cookies->configuracion->tipos_cookies_activos . "';";
 	$contenido_cookies .= "var tiposCookiesObligatorios = '" . $xml_cookies->configuracion->tipos_cookies_obligatorios . "';";
 	$contenido_cookies .= "var tiposConsentimientoActivos = '" . $xml_cookies->configuracion->tipos_consentimientos_activos . "';";
+	$contenido_cookies .= "var tiposConsentimientoObligatorios = '" . $xml_cookies->configuracion->tipos_consentimientos_obligatorios . "';";
 
 	//Inserción del contenido generado solo en el tema: personalizado
 	if (\Drupal::service('theme.manager')->getActiveTheme()->getName() == 'personalizado') {

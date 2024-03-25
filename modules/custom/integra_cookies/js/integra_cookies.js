@@ -105,47 +105,43 @@ function sincronizarConsentimiento() {
 
 	//Solo ejecutamos la sincronización de consentimientos si se ha inicializado la variable de tipos de consentimiento activos
 	if (typeof tiposConsentimientoActivos !== 'undefined') {
-	
+
 		//Creamos un array con los tipos de consentimiento y su estado por defecto
 		var consentimientos = {};
-		
-		//Obtenemos los tipos de consentimiento habilitados
-		var tiposConsentimiento = tiposConsentimientoActivos.split(",");
-		
-		//Repasamos todos los tipos de consentimiento habilitados y establecemos su valor más restrictivo por defecto
-		tiposConsentimiento.forEach(function(valor, indice, array) { consentimientos[valor] = "denied"; });
-		
-		//Obtenemos los tipos de cookies habilitados
-		var tiposCookies = tiposCookiesActivos.split(",");
-		
+
+		//Obtenemos los tipos de consentimiento habilitados y establecemos su valor más restrictivo por defecto
+		tiposConsentimientoActivos.split(",").forEach(function (valor, indice, array) { consentimientos[valor] = "denied"; });
+
+		//Obtenemos los tipos de consentimiento obligatorios y los activamos
+		tiposConsentimientoObligatorios.split(",").forEach(function (valor, indice, array) { consentimientos[valor] = "granted"; });
+
 		//Repasamos todos los tipos de cookies habilitados
-		tiposCookies.forEach(function(valor, indice, array) {
-		
+		tiposCookiesActivos.split(",").forEach(function (valor, indice, array) {
+
 			//Comprobamos si el tipo de cookie actual está entre las habilitadas por el usuario
 			if (jQuery.cookie("acepta_cookies_" + valor) == 1) {
-			
-				//Extraemos los consentimientos asociados a la misma
-				tiposConsentimientoHabilitar = (jQuery("#cookies_" + valor).attr('tipos_consentimiento')).split(",");
-				
-				//Repasamos todos los tipos de consentimieto que aplican en esta cookie
-				tiposConsentimientoHabilitar.forEach(function(valor, indice, array) {
-					if (valor != "") {
-						consentimientos[valor] = "granted";
-					}
-				});
+
+			  //Extraemos los consentimientos asociados a la misma
+			  tiposConsentimientoHabilitar = (jQuery("#cookies_" + valor).attr('tipos_consentimiento')).split(",");
+
+			  //Repasamos todos los tipos de consentimiento que aplican en esta cookie
+			  tiposConsentimientoHabilitar.forEach(function(valor, indice, array) {
+				  
+				if (valor != "") { consentimientos[valor] = "granted"; }
+			  });
 			}
 		});
-		
+
 		//console.log(consentimientos);
-		
+
 		//Revisamos si ya ha aceptado el aviso de cookies o no para generar el default o un update
 		if (jQuery.cookie("aviso_cookies_revisado") != 1) {
-		
+
 			//Primer acceso a la web sin operar previamente con el aviso
 			if (typeof gtag !== 'undefined') { gtag('consent', 'default', consentimientos); }
-			
+
 		} else {
-		
+
 			//Recarga de la página con aviso ya consultado o visita posterior con preferencias cargadas en las cookies
 			if (typeof gtag !== 'undefined') { gtag('consent', 'update', consentimientos); }
 		}
