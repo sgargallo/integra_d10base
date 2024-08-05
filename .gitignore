@@ -20,9 +20,6 @@
 # Ignore configuration files that may contain sensitive information.
 /sites/*/*settings*.php
 /sites/*/*services*.yml
-/sites/development.services.yml
-/sites/example.settings.local.php
-/sites/example.sites.php
 
 # Ignore paths that contain user-generated content.
 /sites/*/files
