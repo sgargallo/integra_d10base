@@ -9,24 +9,27 @@
 
 # Ignore core when managing all of a project's dependencies with Composer
 # including Drupal core.
-core
+/core/
 
 # Ignore dependencies that are managed with Composer.
 # Generally you should only ignore the root vendor directory. It's important
 # that core/assets/vendor and any other vendor directories within contrib or
 # custom module, theme, etc., are not ignored unless you purposely do so.
-vendor
+/vendor/
 
 # Ignore configuration files that may contain sensitive information.
-sites/*/*settings*.php
-sites/*/*services*.yml
+/sites/*/*settings*.php
+/sites/*/*services*.yml
+/sites/development.services.yml
+/sites/example.settings.local.php
+/sites/example.sites.php
 
 # Ignore paths that contain user-generated content.
-sites/*/files
-sites/*/private
+/sites/*/files
+/sites/*/private
 
 # Ignore multi-site test environment.
-sites/simpletest
+/sites/simpletest/
 
 # If you prefer to store your .gitignore file in the sites/ folder, comment
 # or delete the previous settings and uncomment the following ones, instead.
@@ -42,27 +45,22 @@ sites/simpletest
 # simpletest
 
 # Ignora módulos y temas de terceros
-modules/contrib
-themes/contrib
+/modules/contrib
+/themes/contrib
 
 # Ignora archivos base de Drupal
-.csslintrc
-.editorconfig
-.eslintignore
-.eslintrc.json
-.gitattributes
-.ht.router.php
-INSTALL.txt
-README.md
-autoload.php
-example.gitignore
-index.php
-update.php
-web.config
-modules/README.txt
-profiles/README.txt
-sites/README.txt
-sites/development.services.yml
-sites/example.settings.local.php
-sites/example.sites.php
-themes/README.txt
+/.csslintrc
+/.editorconfig
+/.eslintignore
+/.eslintrc.json
+/.gitattributes
+/.ht.router.php
+/.htaccess
+/INSTALL.txt
+/README.md
+/autoload.php
+/example.gitignore
+/index.php
+/robots.txt
+/update.php
+/web.config
